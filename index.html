@@ -149,7 +149,7 @@ html,body,.moduleViewer{overscroll-behavior:none!important}.quickGrid{display:gr
 <button class="module green" data-module-key="strapex" data-url="./strapex/" type="button"><div class="icon">🔧</div><h4 data-t="strapexTitle">Strapex Control</h4><p data-t="strapexDesc">Status urządzeń, produkcja, serwis, naprawy i historia.</p><span class="action" data-t="open">OTWÓRZ →</span></button>
 <button class="module" data-module-key="parts" data-url="./parts/" type="button"><div class="icon">📦</div><h4 data-t="partsTitle">Części</h4><p data-t="partsDesc">Magazyn części, zamówienia, dostawcy i stany minimalne.</p><span class="action" data-t="open">OTWÓRZ →</span></button>
 </section>
-<footer class="appFooter">Vedlikehold Viking Fjord v1.7.24<br>Created and designed by: <a href="https://dwsystem.eu" target="_blank" rel="noopener">DWSystem</a><br><span id="lobbyLastUpdate">—</span></footer>
+<footer class="appFooter">Vedlikehold Viking Fjord v1.7.25<br>Created and designed by: <a href="https://dwsystem.eu" target="_blank" rel="noopener">DWSystem</a><br><span id="lobbyLastUpdate">—</span></footer>
 </main>
 <section id="adminPanel" class="adminPanel"><div class="adminSheet"><div class="adminHead"><h2 data-t="users">Użytkownicy</h2><button id="closeAdmin" class="closeAdmin" type="button">✕</button></div><p id="adminStatus" class="adminStatus"></p><div id="usersList" class="usersList"></div></div></section><section id="settingsPanel" class="settingsPanel" aria-label="Ustawienia"><div class="settingsSheet"><div class="settingsHead"><h2 data-t="settings">Ustawienia</h2><button id="closeSettings" class="settingsClose" type="button">✕</button></div><div id="settingsHome" class="settingsHome"><button id="openBackupSettings" class="settingsTile" type="button">📂 <span id="backupMenuText">Kopia zapasowa</span></button><button id="openStorageSettings" class="settingsTile" type="button">☁️ <span id="storageMenuText">Pamięć zdjęć</span></button><button id="openAccountsSettings" class="settingsTile" type="button">👥 <span id="accountsMenuText">Konta</span></button><button id="openPhoneSettings" class="settingsTile" type="button">📞 <span id="phoneMenuText">Mój numer telefonu</span></button><button id="openBugsSettings" class="settingsTile" type="button">🐞 <span id="bugsMenuText">Błędy</span></button><button id="openModulesSettings" class="settingsTile" type="button">🧰 Moduły</button><button id="openLogsSettings" class="settingsTile" type="button">📜 Logi użytkowników</button><button id="openActivitySettings" class="settingsTile" type="button">🟢 Aktywność</button></div><section id="phoneSettingsView" class="settingsView"><button class="settingsBack" id="phoneBack" type="button">← <span id="phoneBackText">Wróć</span></button><h3 id="phoneTitle">📞 Mój numer telefonu</h3><div class="backupCard accountCreate"><p id="phoneHint" class="backupLast"></p><div class="accountGrid"><input id="phoneInput" type="tel" inputmode="tel" autocomplete="tel" placeholder="+47 000 00 000"></div><button id="phoneSave" type="button">Zapisz</button></div><div id="phoneStatus" class="settingsStatus"></div></section><section id="storageSettingsView" class="settingsView"><button class="settingsBack" data-settings-back type="button">← <span id="storageBackText">Wróć</span></button><h3 id="storageTitle">☁️ Pamięć zdjęć zgłoszeń</h3><div class="backupCard"><div class="backupRowHead"><b id="storageUsedLabel">Wykorzystano</b><span id="storagePercent" class="backupDate fresh">0%</span></div><div class="storageBar"><i id="storageBarFill"></i></div><p id="storageDetails" class="backupLast">—</p></div><div id="storageStatus" class="settingsStatus"></div></section><section id="backupSettingsView" class="settingsView"><button class="settingsBack" data-settings-back type="button">← <span id="backupBackText">Wróć</span></button><h3 id="backupTitle">📂 Kopia zapasowa</h3><div id="backupRows" class="backupRows"></div><div id="backupStatus" class="settingsStatus"></div></section><section id="accountsSettingsView" class="settingsView"><button class="settingsBack" data-settings-back type="button">← <span id="accountsBackText">Wróć</span></button><h3 id="accountsTitle">👥 Konta</h3><div class="accountCreate"><h3 id="addAccountTitle">➕ Dodaj konto</h3><div class="accountGrid"><input id="newAccountName" placeholder="Imię i nazwisko"><input id="newAccountEmail" type="email" placeholder="E-mail"><input id="newAccountPassword" type="password" placeholder="Hasło tymczasowe"><select id="newAccountRole"><option value="viewer">viewer</option><option value="hours">hours</option><option value="worker" selected>worker</option><option value="supervisor">supervisor</option><option value="admin">admin</option></select></div><button id="createAccountBtn" type="button">Dodaj konto</button></div><div id="accountsList" class="accountsList"></div><div id="accountsStatus" class="settingsStatus"></div></section><section id="modulesSettingsView" class="settingsView"><button class="settingsBack" data-settings-back type="button">← Wróć</button><h3>🧰 Dostępność modułów</h3><div id="maintenanceRows" class="maintenanceRows"></div><div id="modulesStatus" class="settingsStatus"></div></section><section id="bugsSettingsView" class="settingsView"><button class="settingsBack" data-settings-back type="button">← <span id="bugsBackText">Wróć</span></button><h3 id="bugsTitle">🐞 Błędy</h3><div id="bugsList" class="accountsList"></div><div id="bugsStatus" class="settingsStatus"></div></section><section id="logsSettingsView" class="settingsView"><button class="settingsBack" data-settings-back type="button">← Wróć</button><h3>📜 Logi użytkowników</h3><div class="accountGrid"><select id="logUserFilter" class="formSelect"><option value="">Wszyscy użytkownicy</option></select><select id="logActionFilter" class="formSelect"><option value="">Wszystkie czynności</option></select><select id="logModuleFilter" class="formSelect"><option value="">Wszystkie moduły</option></select><select id="logSort" class="formSelect"><option value="newest">Najnowsze</option><option value="oldest">Najstarsze</option><option value="user">Użytkownik A-Z</option><option value="action">Czynność A-Z</option></select></div><div id="logsList" class="accountsList"></div><div id="logsStatus" class="settingsStatus"></div></section><section id="activitySettingsView" class="settingsView"><button class="settingsBack" data-settings-back type="button">← Wróć</button><h3>🟢 Aktywność użytkowników</h3><p class="backupLast">Status online jest odświeżany podczas korzystania z Lobby. Historia zaczyna się zapisywać od tej wersji.</p><div id="activityList" class="accountsList"></div><div id="activityStatus" class="settingsStatus"></div></section></div></section><section id="bugReportPanel" class="settingsPanel"><div class="settingsSheet"><div class="settingsHead"><h2 id="bugReportTitle">Zgłoś błąd</h2><button id="closeBugReport" class="settingsClose" type="button">✕</button></div><div class="accountCreate"><select id="bugModuleInput" class="formSelect"><option>Lobby</option><option>Shift Plan</option><option>Hours</option><option>Strapex</option><option>Prace</option><option>Części</option><option>Inne</option></select><textarea id="bugDescriptionInput" placeholder="Opisz błąd" style="width:100%;min-height:130px;margin-top:9px;padding:11px;border:1px solid var(--line);border-radius:11px;background:#07111f;color:#fff"></textarea><button id="sendBugBtn" type="button">Wyślij zgłoszenie</button></div><div id="bugReportStatus" class="settingsStatus"></div></div></section><section id="passwordResetPanel" class="settingsPanel"><div class="settingsSheet"><div class="settingsHead"><h2 id="passwordResetTitle">Ustaw nowe hasło</h2><button id="closePasswordReset" class="settingsClose" type="button">✕</button></div><div class="accountCreate"><input id="newRecoveryPassword" type="password" placeholder="Nowe hasło"><button id="saveRecoveryPassword" type="button">Zapisz nowe hasło</button></div><div id="passwordResetStatus" class="settingsStatus"></div></div></section><section id="workPanel" class="workPanel"><div class="workSheet"><div class="settingsHead"><h2 id="workTitle">🛠️ Prace</h2><button id="closeWork" class="settingsClose" type="button">✕</button></div><div id="workTabs" class="workTabs"><button id="showOpenWorks" type="button">📋 Otwarte</button><button id="showWorkForm" class="workAddTab" type="button">➕ <span id="showWorkFormText">Dodaj</span></button><button id="showWorkHistory" type="button">✅ Zamknięte</button></div><section id="workForm"><input id="workReporter" class="formInput" placeholder="Imię zgłaszającego (opcjonalnie)"><input id="workTitleInput" class="formInput" placeholder="Co trzeba zrobić?"><select id="workLocation" class="formSelect"><option value="">Wybierz lokalizację</option><option>Kjol</option><option>Slakting</option><option>Pakking</option><option>Blogging</option><option>Office</option><option>Cantina</option><option>Kai</option><option>Workshop</option><option>Merd</option><option>Inne</option></select><textarea id="workDescription" class="formText" placeholder="Opis"></textarea><label id="workPhotoLabel" class="workUpload"><span class="workUploadIcon">🖼️</span><span id="workPhotoText">Wybierz zdjęcia z galerii</span><input id="workPhoto" type="file" accept="image/*" multiple></label><div id="workPhotoNames" class="workPhotoNames"></div><button id="submitWork" class="login-btn" type="button">Wyślij zgłoszenie</button><div id="workStatus" class="settingsStatus"></div></section><div id="workList" class="workList hidden"></div></div></section><section id="publicLinkPanel" class="publicLinkPanel" aria-label="Link publiczny"><div class="publicLinkSheet"><div class="settingsHead"><h2 id="publicLinkTitle">Link publiczny</h2><button id="closePublicLink" class="settingsClose" type="button">✕</button></div><p id="publicLinkDescription" class="backupLast">Skopiuj link do strony publicznej.</p><div class="publicLinkRow"><input id="publicLinkInput" type="text" readonly><button id="copyPublicLink" type="button">Kopiuj</button></div></div></section><section id="notificationPanel" class="settingsPanel"><div class="settingsSheet"><div class="settingsHead"><h2 id="notificationTitle">📢 Powiadomienia</h2><button id="closeNotifications" class="settingsClose" type="button">✕</button></div><div id="notificationList" class="accountsList"></div></div></section><section id="moduleViewer" class="moduleViewer" aria-label="Otwarty moduł"><button id="viewerBack" class="hidden" type="button" tabindex="-1" aria-hidden="true">Lobby</button><b id="viewerTitle" class="hidden">Moduł</b><button id="viewerReload" class="hidden" type="button" tabindex="-1" aria-hidden="true">Odśwież</button><iframe id="moduleFrame" title="Moduł"></iframe></section>
 <div id="toast" class="toast" role="status"></div>
@@ -1293,5 +1293,139 @@ if(typeof prev==='function')window.loadWorks=async function(history){await prev.
    const box=c.querySelector('.inlineActions');if(!box)return;const b=document.createElement('button');b.type='button';b.dataset.undoStart='1';b.textContent=L[lg()]||L.pl;
    b.onclick=()=>undoStartWorkOrder(x.id);box.insertBefore(b,box.firstChild)})}catch(e){console.warn(e)}};
 }catch(e){console.warn('work-undo',e)}})();</script>
+<style id="ui-redesign-css">
+/* ===== DESIGN SYSTEM 2026-10-30 =====
+ Kolory: neutralna ciemna baza, jeden akcent, statusy. Typografia: jedna rodzina (system sans), skala 12/13/15/17/20.
+ Odstępy: 4/8/12/16/24. Promienie: 8 (kontrolki), 12 (powierzchnie). Bez gradientów i świecenia. */
+:root{--bg:#0f1318;--surface:#161b22;--surface-2:#1d232c;--line:#2a313b;--line-soft:#222932;--text:#e8ecf1;--muted:#8e99a8;--accent:#4c8bf5;--accent-press:#3d78dc;--ok:#34b27b;--warn:#d6a032;--err:#e5534b;--r-s:8px;--r-m:12px;--shadow:none;--soft:var(--surface-2);--edge:var(--line);--blue:var(--accent)}
+html,body{background:var(--bg)!important}
+body{background:var(--bg)!important;color:var(--text);font:15px/1.5 Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif!important;-webkit-font-smoothing:antialiased}
+*{animation:none!important;transition-duration:.12s!important}
+button,select,input,textarea{font-family:inherit}
+:focus-visible{outline:2px solid var(--accent)!important;outline-offset:2px}
+/* login */
+.gate{background:var(--bg)!important}
+.login{background:var(--surface)!important;border:1px solid var(--line)!important;border-radius:var(--r-m)!important;box-shadow:none!important}
+.login h1{font-size:19px!important;font-weight:650}.login-sub{color:var(--muted)!important;font-size:14px!important}
+.login-btn,.chatBtn.primary{background:var(--accent)!important;border:0!important;border-radius:var(--r-s)!important;color:#fff!important;font-weight:650!important;box-shadow:none!important}
+.login-btn:active,.chatBtn.primary:active{background:var(--accent-press)!important}
+input,select,textarea,.formSelect,.formInput,.formText{background:var(--bg)!important;border:1px solid var(--line)!important;border-radius:var(--r-s)!important;color:var(--text)!important}
+input:focus,select:focus,textarea:focus{border-color:var(--accent)!important}
+/* header */
+.app{max-width:1080px!important;padding:calc(12px + env(safe-area-inset-top)) 16px calc(32px + env(safe-area-inset-bottom))!important}
+.top{margin-bottom:16px!important;gap:12px!important}
+.brand{gap:10px!important}.brand h1{font-size:15px!important;font-weight:650!important;letter-spacing:0!important;text-align:left!important;line-height:1.2!important;text-transform:none}
+.brand p{font-size:12px!important;letter-spacing:0!important;text-transform:none!important;color:var(--muted)!important}
+.logo{width:36px!important;height:36px!important;border-radius:var(--r-s)!important;box-shadow:none!important;background:var(--surface-2)!important}
+.user{background:transparent!important;border:0!important;padding:0!important}
+.avatar{width:36px!important;height:36px!important;border-radius:50%!important;background:var(--surface-2)!important;border:1px solid var(--line)!important;font-weight:650!important;font-size:14px}
+.chatIconBtn{width:36px!important;height:36px!important;border-radius:var(--r-s)!important;background:var(--surface)!important;border:1px solid var(--line)!important;box-shadow:none!important;color:var(--text)}
+.avBadge,.chatBadge,.woBadge{box-shadow:none!important;background:var(--err)!important}
+.woBadge{top:50%!important;right:44px!important;transform:translateY(-50%)!important;min-width:24px!important;height:24px!important;line-height:24px!important;font-size:13px!important;border-radius:12px!important}
+.accountMenu{background:var(--surface)!important;border:1px solid var(--line)!important;border-radius:var(--r-m)!important;box-shadow:0 8px 24px rgba(0,0,0,.45)!important}
+.accountMenu button,.settingsTile{border-radius:var(--r-s)!important;font-weight:550!important;color:var(--text)!important;background:transparent!important}
+.accountMenu button:hover,.settingsTile:hover{background:var(--surface-2)!important}
+.settingsTile{border:1px solid var(--line)!important;background:var(--surface)!important;min-height:52px!important}
+.languageRow button{border-radius:var(--r-s)!important}.languageRow button.active{background:var(--surface-2)!important;color:var(--text)!important;border-color:var(--accent)!important}
+/* sekcja Dziś: bez karty w karcie */
+.hero{background:transparent!important;border:0!important;box-shadow:none!important;border-radius:0!important;padding:0!important;overflow:visible!important}
+.status{display:none!important}
+.hero h2{font-size:13px!important;font-weight:600!important;color:var(--muted)!important;letter-spacing:.04em;text-transform:uppercase;margin:0 0 8px!important;line-height:1.3!important}
+.hero p#welcome{font-size:13px!important;color:var(--muted)!important;margin:12px 0 0!important}
+.quickGrid{display:grid!important;grid-template-columns:1fr 1fr!important;gap:8px!important;margin:0!important}
+.quickCard{min-height:0!important;padding:12px 14px!important;background:var(--surface)!important;border:1px solid var(--line)!important;border-radius:var(--r-m)!important;box-shadow:none!important;display:flex!important;flex-direction:column;gap:2px}
+.quickCard b{font-size:20px!important;font-weight:650!important;color:var(--text)!important;line-height:1.2}
+.quickCard span{font-size:13px!important;color:var(--muted)!important}
+#quickNotificationsCard,.notificationQuickCard{background:var(--surface)!important;border-color:var(--line)!important}
+#quickPartsCard{grid-column:1/-1;order:-1;flex-direction:row!important;align-items:center;justify-content:center;gap:10px!important;background:var(--accent)!important;border-color:var(--accent)!important;min-height:52px!important}
+#quickPartsCard b,#quickPartsCard span{color:#fff!important;font-size:16px!important;font-weight:650!important}
+#quickPartsCard.running,#quickPartsCard[data-running="1"]{background:var(--ok)!important;border-color:var(--ok)!important}
+#quickTomorrowCard,#quickVaktCard,#quickWorksCard,#quickNotificationsCard{order:1}
+/* moduły: lista */
+.head{margin:24px 0 8px!important}.head h3{font-size:13px!important;font-weight:600!important;color:var(--muted)!important;letter-spacing:.04em;text-transform:uppercase}.head span{display:none!important}
+body .grid{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:8px!important}
+@media(max-width:900px){body .grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+@media(max-width:620px){body .grid{grid-template-columns:1fr!important}}
+body .grid .module{position:relative;display:grid!important;grid-template-columns:44px 1fr;column-gap:14px;align-items:center;min-height:72px!important;height:auto!important;padding:14px 40px 14px 14px!important;background:var(--surface)!important;border:1px solid var(--line)!important;border-radius:var(--r-m)!important;box-shadow:none!important;text-align:left!important;overflow:hidden}
+body .grid .module:hover{background:var(--surface-2)!important}
+body .grid .module:after{content:"";position:absolute;right:16px;top:50%;width:8px;height:8px;border-right:2px solid var(--muted);border-top:2px solid var(--muted);transform:translateY(-50%) rotate(45deg)}
+body .grid .module .icon{grid-row:1/3;width:44px!important;height:44px!important;margin:0!important;border-radius:10px!important;background:var(--surface-2)!important;border:1px solid var(--line)!important;box-shadow:none!important;color:var(--accent);font-size:0!important;display:grid;place-items:center;transform:none!important}
+body .grid .module .icon svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+body .grid .module h4{margin:0!important;font-size:16px!important;font-weight:650!important;line-height:1.25!important;align-self:end}
+body .grid .module p{display:block!important;margin:2px 0 0!important;padding:0!important;font-size:13px!important;line-height:1.35!important;color:var(--muted)!important;align-self:start;display:-webkit-box!important;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+body .grid .module .action{display:none!important}
+body .grid .module.disabledModule{border:1px solid var(--err)!important;background:var(--surface)!important;box-shadow:none!important;opacity:.75}
+body .grid .module.disabledModule:before{top:8px!important;right:12px!important;padding:2px 8px!important;border-radius:6px!important;font-size:10px!important;background:transparent!important;color:var(--err)!important;border:1px solid var(--err)}
+body .grid .module.disabledModule:after{display:none}
+.module.soon{opacity:.6}
+/* panele */
+.settingsSheet,.workSheet,.adminSheet{background:var(--surface)!important;border:1px solid var(--line)!important;border-radius:var(--r-m)!important;box-shadow:0 8px 32px rgba(0,0,0,.5)!important}
+.workCard,.bugCard,.accountRow,.userRow{background:var(--surface-2)!important;border:1px solid var(--line)!important;border-radius:var(--r-m)!important;box-shadow:none!important}
+.workCard h3{font-size:16px!important;font-weight:650!important}
+.settingsHead h2,.adminHead h2{font-size:17px!important;font-weight:650!important}
+.settingsClose,.closeAdmin{border-radius:var(--r-s)!important;background:var(--surface-2)!important;border:1px solid var(--line)!important}
+.workTabs button,.inlineActions button{border-radius:var(--r-s)!important;font-weight:600!important;box-shadow:none!important}
+.viewerBar{background:var(--surface)!important;border-bottom:1px solid var(--line)!important;box-shadow:none!important}
+.viewerBar button{background:var(--surface-2)!important;border:1px solid var(--line)!important;border-radius:var(--r-s)!important}
+.moduleViewer{background:var(--bg)!important}
+.toast{border-radius:var(--r-s)!important;box-shadow:0 6px 20px rgba(0,0,0,.4)!important}
+.appFooter,.login-footer{color:var(--muted)!important;opacity:.7!important}
+/* czat */
+.chatPanel{background:var(--bg)!important}
+.chatHead,.chatBar{background:var(--surface)!important;border-color:var(--line)!important}
+.chatHead h2{font-size:17px!important;font-weight:650!important}
+.chatHead button,.chatBtn{background:var(--surface-2)!important;border:1px solid var(--line)!important;border-radius:var(--r-s)!important;box-shadow:none!important}
+.chatBar textarea{border-radius:var(--r-m)!important}
+.chatMsg{background:var(--surface-2)!important;border:1px solid var(--line)!important;border-radius:var(--r-m)!important;color:var(--text)!important}
+.chatMsg.mine{background:var(--accent)!important;border-color:var(--accent)!important}
+.chatMsg:not(.mine) .chatVm button{background:var(--accent)!important}
+.chatDay{background:transparent!important;color:var(--muted)!important}
+.chatTrText{border-left-color:var(--accent)!important;background:rgba(255,255,255,.05)!important}
+
+.workTabs button{background:var(--surface-2)!important;background-image:none!important;border:1px solid var(--line)!important;color:var(--text)!important}
+.workTabs button.active,.workTabs button.on,.workTabs button[aria-selected="true"]{border-color:var(--accent)!important}
+.inlineActions button{background:var(--surface)!important;background-image:none!important;border:1px solid var(--line)!important;color:var(--text)!important}
+.inlineActions button.danger{color:var(--err)!important;border-color:rgba(229,83,75,.5)!important}
+.chatBtn svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;display:block;margin:auto}
+#chatDict.on svg{stroke:#fff}
+.login-logo{box-shadow:none!important;width:56px!important;height:56px!important;border-radius:var(--r-m)!important}
+.publicRequest{background:transparent!important;background-image:none!important;border:1px solid var(--line)!important;border-radius:var(--r-s)!important;color:var(--text)!important;box-shadow:none!important}
+/* nadpisania mocniejsze (starsze reguły używają id i !important) */
+body .top{background:transparent!important;border:0!important;box-shadow:none!important}
+body .top .brand{flex-direction:row!important;align-items:center!important;gap:10px!important;text-align:left!important}
+body .top .brand h1{text-align:left!important;white-space:nowrap}
+#welcomeShort{display:none!important}
+body .quickGrid #quickNotificationsCard,body .quickGrid #quickTomorrowCard{grid-column:auto!important}
+body .grid .module{column-gap:14px!important}
+#quickParts.isPlay{font-size:0!important;width:0;height:0;border-left:11px solid #fff;border-top:7px solid transparent;border-bottom:7px solid transparent;display:inline-block}
+#quickTomorrowCard,#quickVaktCard,#quickWorksCard,#quickNotificationsCard{background:var(--surface)!important;background-image:none!important;border-color:var(--line)!important}
+body .quickGrid .quickCard{background:var(--surface)!important;background-image:none!important;border:1px solid var(--line)!important;box-shadow:none!important;grid-column:auto!important;order:2!important}
+body .quickGrid #quickPartsCard{grid-column:1/-1!important;order:0!important;background:var(--accent)!important;border-color:var(--accent)!important}
+body .quickGrid #quickTomorrowCard{order:1!important}body .quickGrid #quickNotificationsCard{order:3!important}
+body .quickGrid #quickNotificationsCard{display:flex!important;flex-direction:column!important;grid-template-columns:none!important;align-items:flex-start}
+body .hero h2{display:block!important;width:100%!important}
+body .grid .module .woBadge,body .woBadge{top:12px!important;right:40px!important;transform:none!important}
+@media(max-width:620px){.app{padding-left:14px!important;padding-right:14px!important}.brand p{display:none!important}.user .usertext{display:none}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+<script id="ui-redesign-script">(()=>{try{
+const I={
+shift:'<svg viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 10h17M8 3v4M16 3v4"/></svg>',
+hours:'<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg>',
+works:'<svg viewBox="0 0 24 24"><path d="M14.5 6.5a4 4 0 0 0 4.6 5.2l-8.6 8.6a2 2 0 0 1-2.8-2.8l8.6-8.6a4 4 0 0 0-1.8-2.4z" transform="translate(-1 -1)"/></svg>',
+vakt:'<svg viewBox="0 0 24 24"><path d="M6 17V11a6 6 0 0 1 12 0v6l1.5 2h-15zM10 21h4"/></svg>',
+strapex:'<svg viewBox="0 0 24 24"><rect x="3.5" y="9" width="17" height="6" rx="3"/><path d="M8 9v6M16 9v6"/></svg>',
+parts:'<svg viewBox="0 0 24 24"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M4 7.5l8 4.5 8-4.5M12 12v9"/></svg>',
+chat:'<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5h16v10H9.5L5.5 19v-3.5H4z"/></svg>'};
+function icons(){document.querySelectorAll('.grid .module[data-module-key]').forEach(m=>{const k=m.dataset.moduleKey,ic=m.querySelector('.icon');if(ic&&I[k]&&ic.dataset.svg!==k){ic.innerHTML=I[k];ic.dataset.svg=k}});
+ const cb=document.getElementById('chatBtn');if(cb&&!cb.dataset.svg){const b=cb.querySelector('.chatBadge');cb.dataset.svg='1';cb.innerHTML=I.chat;if(b)cb.appendChild(b)}}
+const C={photo:'<svg viewBox="0 0 24 24"><path d="M4 8h3l1.5-2h7L17 8h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>',mic:'<svg viewBox="0 0 24 24"><rect x="9" y="3.5" width="6" height="11" rx="3"/><path d="M5.5 11.5a6.5 6.5 0 0 0 13 0M12 18v3"/></svg>',send:'<svg viewBox="0 0 24 24"><path d="M4 12l16-8-6 16-2.5-6.5z"/></svg>',dict:'<svg viewBox="0 0 24 24"><path d="M4 10v4M8 7v10M12 4v16M16 7v10M20 10v4"/></svg>'};
+function chatIcons(){const set=(el,k)=>{if(el&&el.dataset.ic!==k){const inp=el.querySelector('input');el.dataset.ic=k;el.innerHTML=C[k];if(inp)el.appendChild(inp)}};
+ set(document.getElementById('chatPhotoBtn'),'photo');set(document.getElementById('chatMic'),'mic');set(document.getElementById('chatSend'),'send');set(document.getElementById('chatDict'),'dict')}
+const EM=/^[\s‍]*(?:\p{Extended_Pictographic}|️)+[\s‍]*/u;
+function strip(root){root.querySelectorAll('button,h2,h3').forEach(b=>{const n=b.firstChild;if(n&&n.nodeType===3&&EM.test(n.nodeValue)){const r=n.nodeValue.replace(EM,'');if(r.trim()||b.children.length||b.textContent.replace(n.nodeValue,'').trim())n.nodeValue=r}})}
+function run(){icons();chatIcons();const q=document.getElementById('quickParts');if(q)q.classList.toggle('isPlay',q.textContent.trim()==='▶');['accountMenu','settingsPanel','mySettingsPanel','workPanel','chatPanel','adminPanel','bugReportPanel'].forEach(id=>{const e=document.getElementById(id);if(e)strip(e)})}
+run();new MutationObserver(()=>{clearTimeout(run.t);run.t=setTimeout(run,60)}).observe(document.body,{childList:true,subtree:true,characterData:true});
+}catch(e){console.warn('ui-redesign',e)}})();</script>
 </body>
 </html>
