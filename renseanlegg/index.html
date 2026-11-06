@@ -55,7 +55,7 @@ details.hist{border-top:1px solid var(--line);padding:10px 0}details.hist summar
 <section id="day" class="hidden"><div class="card"><div class="row"><h2 style="margin:0" id="dayTitle"></h2><button class="btn" id="dayBack"></button></div><p class="muted" id="dayInfo"></p></div><div id="dayRows"></div></section>
 <section id="run" class="hidden"><div class="card"><div class="row"><b id="progressText"></b><span class="muted" id="runInfo"></span></div><div class="progress" style="margin-top:10px"><i id="bar"></i></div></div><div id="points"></div><div class="card"><button class="btn ok" id="finishBtn" style="width:100%"></button></div></section>
 <section id="admin" class="hidden"><div class="card"><div class="row"><h2 style="margin:0" id="admTitle"></h2><button class="btn" id="admClose"></button></div><p class="muted" id="admHelp"></p></div><div class="card" id="admList"></div><div class="card"><label id="iceLbl"></label><input id="iceTime" type="time"></div></section>
-<footer class="appFooter">Renseanlegg v1.2.1<br>Created and designed by: <a href="https://dwsystem.eu" target="_blank" rel="noopener">DWSystem</a></footer>
+<footer class="appFooter">Renseanlegg v1.2.2<br>Created and designed by: <a href="https://dwsystem.eu" target="_blank" rel="noopener">DWSystem</a></footer>
 </main><div class="toast" id="toast"></div>
 <input id="fileIn" type="file" accept="image/*" capture="environment" class="hidden">
 <script>
@@ -111,11 +111,11 @@ const todayRun=()=>runs.find(r=>r.date===ymd(new Date()));
 const activePts=()=>cfg.points.filter(p=>p.active);
 const doneCount=r=>activePts().filter(p=>r.items?.[p.id]?.doneAt).length;
 function iceStatus(){const now=new Date(),[h,m]=cfg.iceTime.split(':').map(Number),due=new Date(now.getFullYear(),now.getMonth(),now.getDate(),h,m),r=todayRun(),done=!!r?.items?.ice?.doneAt;return{due,done,late:!done&&now>=due,soon:!done&&now>=new Date(due.getTime()-10*60000)&&now<due}}
-let notified=false;
+let notified=false,ready=false;
 function renderAlerts(){
  const el=$('alerts'),ice=activePts().find(p=>p.id==='ice');let h='';
  if(ice){const s=iceStatus();if(s.late){h+=`<div class="banner red">🧊 ${esc(t('iceNow'))} (${esc(t('iceDue'))} ${esc(cfg.iceTime)})</div>`;
-   if(!notified&&'Notification'in window&&Notification.permission==='granted'){notified=true;try{new Notification('Renseanlegg',{body:t('iceNow')})}catch(e){}}}
+   if(ready&&!notified&&'Notification'in window&&Notification.permission==='granted'){notified=true;let k='rense_ice_notif',d=ymd(new Date()),seen=false;try{seen=localStorage.getItem(k)===d;if(!seen)localStorage.setItem(k,d)}catch(e){}if(!seen)try{new Notification('🧊 Renseanlegg',{body:'🧊 '+t('iceNow')})}catch(e){}}}
   else if(!s.done)h+=`<div class="banner">🧊 ${esc(t('iceDue'))} ${esc(cfg.iceTime)}</div>`}
  const r=todayRun();if(!r&&new Date().getHours()>=7)h+=`<div class="banner">${esc(t('noRun'))}</div>`;
  el.innerHTML=h}
@@ -207,7 +207,7 @@ $('iceTime').onchange=e=>{if(e.target.value){cfg.iceTime=e.target.value;saveCfg(
 $('history').addEventListener('click',e=>{const b=e.target.closest('[data-day]');if(b)view('day',b.dataset.day)});$('dayBack').onclick=()=>view('home');
 $('adminBtn').onclick=()=>view('admin');$('admClose').onclick=()=>view('home');
 $('homeBtn').onclick=()=>{try{if(parent!==window){parent.postMessage({type:'vf-open-lobby'},'*');return}}catch(e){}location.href=new URL('../',location.href).href};
-function applyLang(code){lang=UI[code]?code:(code==='nb'?'no':'pl');try{localStorage.setItem('vf-language',lang)}catch(e){}document.documentElement.lang=lang==='no'?'nb':lang;$('subtitle').textContent=t('sub');const v=!$('run').classList.contains('hidden')?'run':!$('admin').classList.contains('hidden')?'admin':!$('day').classList.contains('hidden')?'day':'home';if(me)view(v)}
+function applyLang(code){lang=UI[code]?code:(code==='nb'?'no':'pl');try{localStorage.setItem('vf-language',lang)}catch(e){}document.documentElement.lang=lang==='no'?'nb':lang;$('subtitle').textContent=t('sub');const v=!$('run').classList.contains('hidden')?'run':!$('admin').classList.contains('hidden')?'admin':!$('day').classList.contains('hidden')?'day':'home';if(me&&ready)view(v)}
 window.addEventListener('message',e=>{if(e.data?.type==='vf-language')applyLang(e.data.language)});
 if(parent!==window)try{parent.postMessage({type:'vf-language-request'},'*')}catch(e){}
 (async()=>{
@@ -216,7 +216,7 @@ if(parent!==window)try{parent.postMessage({type:'vf-language-request'},'*')}catc
  const role=String(prof.role||'').toLowerCase();isAdmin=['admin','supervisor'].includes(role);$('adminBtn').classList.toggle('hidden',!isAdmin);
  $('subtitle').textContent=t('sub');
  try{await loadAll()}catch(e){toast(t('err')+': '+e.message)}
- view(todayRun()&&!todayRun().finishedAt?'run':'home');
+ ready=true;view(todayRun()&&!todayRun().finishedAt?'run':'home');
  setInterval(()=>{if(!$('admin').classList.contains('hidden'))return;renderAlerts()},30000);
  document.addEventListener('visibilitychange',async()=>{if(document.hidden||!me)return;try{await loadAll();if(!$('admin').classList.contains('hidden')||!$('day').classList.contains('hidden'))return;view(!$('run').classList.contains('hidden')?'run':'home')}catch(e){}});
 })();
