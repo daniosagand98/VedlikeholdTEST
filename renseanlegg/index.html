@@ -43,7 +43,7 @@ label{display:block;font-size:13px;color:var(--muted);margin:8px 0 4px}
 .banner.red{background:#4a1818;border-color:#8a2c2c;color:#ffc4c4}
 .toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#0e2a1e;color:#bff3da;border:1px solid #1d6e4d;border-radius:14px;padding:12px 18px;z-index:99;display:none;max-width:90%}
 details.hist{border-top:1px solid var(--line);padding:10px 0}details.hist summary{cursor:pointer;font-weight:700}
-.dayBtn{display:flex;justify-content:space-between;align-items:center;width:100%;margin-bottom:8px;text-align:left}.adm{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);padding:10px 0}
+.grab{font-size:26px;line-height:1;padding:6px 10px;color:var(--muted);touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none}.adm.dragging{background:#1b3150;border-radius:12px;box-shadow:0 6px 18px #0008;position:relative;z-index:5}input[type=time]{display:block;width:100%;min-width:0;max-width:100%;-webkit-appearance:none;appearance:none;text-align:left;min-height:48px}.dayBtn{display:flex;justify-content:space-between;align-items:center;width:100%;margin-bottom:8px;text-align:left}.adm{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);padding:10px 0}
 .sw{display:flex;align-items:center;gap:6px;font-size:14px;color:var(--text);margin:0}.sw input{width:22px;height:22px}
 .appFooter{text-align:center;color:var(--muted);font-size:12px;margin-top:24px;line-height:1.6}.appFooter a{color:inherit}
 </style>
@@ -55,7 +55,7 @@ details.hist{border-top:1px solid var(--line);padding:10px 0}details.hist summar
 <section id="day" class="hidden"><div class="card"><div class="row"><h2 style="margin:0" id="dayTitle"></h2><button class="btn" id="dayBack"></button></div><p class="muted" id="dayInfo"></p></div><div id="dayRows"></div></section>
 <section id="run" class="hidden"><div class="card"><div class="row"><b id="progressText"></b><span class="muted" id="runInfo"></span></div><div class="progress" style="margin-top:10px"><i id="bar"></i></div></div><div id="points"></div><div class="card"><button class="btn ok" id="finishBtn" style="width:100%"></button></div></section>
 <section id="admin" class="hidden"><div class="card"><div class="row"><h2 style="margin:0" id="admTitle"></h2><button class="btn" id="admClose"></button></div><p class="muted" id="admHelp"></p></div><div class="card" id="admList"></div><div class="card"><label id="iceLbl"></label><input id="iceTime" type="time"></div></section>
-<footer class="appFooter">Renseanlegg v1.2.0<br>Created and designed by: <a href="https://dwsystem.eu" target="_blank" rel="noopener">DWSystem</a></footer>
+<footer class="appFooter">Renseanlegg v1.2.1<br>Created and designed by: <a href="https://dwsystem.eu" target="_blank" rel="noopener">DWSystem</a></footer>
 </main><div class="toast" id="toast"></div>
 <input id="fileIn" type="file" accept="image/*" capture="environment" class="hidden">
 <script>
@@ -182,17 +182,27 @@ $('startBtn').onclick=async()=>{
 /* ustawienia punktów (admin / supervisor) */
 function renderAdmin(){
  $('admTitle').textContent=t('adm');$('admHelp').textContent=t('admHelp');$('admClose').textContent=t('close');$('iceLbl').textContent=t('iceTime');$('iceTime').value=cfg.iceTime;
- $('admList').innerHTML=cfg.points.map(p=>`<div class="adm"><b style="flex:1 1 60%">${esc(pname(p))}</b><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><button class="iconbtn" style="min-width:40px;height:40px" data-mv="-1" data-id="${p.id}" aria-label="up">▲</button><button class="iconbtn" style="min-width:40px;height:40px" data-mv="1" data-id="${p.id}" aria-label="down">▼</button><label class="sw"><input type="checkbox" data-a="photo" data-id="${p.id}" ${p.photo?'checked':''}>📷 ${esc(t('photo'))}</label><label class="sw"><input type="checkbox" data-a="active" data-id="${p.id}" ${p.active?'checked':''}>${esc(t('active'))}</label>${p.custom?`<button class="iconbtn" style="min-width:40px;height:40px" data-del="${p.id}" aria-label="${esc(t('del'))}">🗑️</button>`:''}</div></div>`).join('')+`<div style="padding-top:14px"><h3 style="margin:0 0 6px">${esc(t('addStep'))}</h3><label>${esc(t('stepName'))}</label><input id="newName" maxlength="80"><label>${esc(t('stepType'))}</label><select id="newType"><option value="check">${esc(t('typeCheck'))}</option><option value="ph">${esc(t('typePh'))}</option></select><label class="sw" style="margin-top:10px"><input type="checkbox" id="newPhoto">📷 ${esc(t('photoReq'))}</label><div class="actions"><button class="btn primary" id="addStepBtn">${esc(t('add'))}</button></div></div>`}
+ $('admList').innerHTML=cfg.points.map(p=>`<div class="adm" data-row="${p.id}"><span class="grab" data-grab="${p.id}" aria-label="drag">⠿</span><b style="flex:1 1 50%">${esc(pname(p))}</b><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><label class="sw"><input type="checkbox" data-a="photo" data-id="${p.id}" ${p.photo?'checked':''}>📷 ${esc(t('photo'))}</label><label class="sw"><input type="checkbox" data-a="active" data-id="${p.id}" ${p.active?'checked':''}>${esc(t('active'))}</label>${p.custom?`<button class="iconbtn" style="min-width:40px;height:40px" data-del="${p.id}" aria-label="${esc(t('del'))}">🗑️</button>`:''}</div></div>`).join('')+`<div style="padding-top:14px"><h3 style="margin:0 0 6px">${esc(t('addStep'))}</h3><label>${esc(t('stepName'))}</label><input id="newName" maxlength="80"><label>${esc(t('stepType'))}</label><select id="newType"><option value="check">${esc(t('typeCheck'))}</option><option value="ph">${esc(t('typePh'))}</option></select><label class="sw" style="margin-top:10px"><input type="checkbox" id="newPhoto">📷 ${esc(t('photoReq'))}</label><div class="actions"><button class="btn primary" id="addStepBtn">${esc(t('add'))}</button></div></div>`}
 async function saveCfg(){cfg.updated_at=new Date().toISOString();try{await writeState(CFG_ID,{iceTime:cfg.iceTime,updated_at:cfg.updated_at,order:cfg.points.map(p=>p.id),points:cfg.points.filter(p=>!p.custom).map(p=>({id:p.id,photo:p.photo,active:p.active})),custom:cfg.points.filter(p=>p.custom).map(p=>({id:p.id,name:p.name,type:p.type,photo:p.photo,active:p.active}))});toast(t('saved'))}catch(e){toast(t('err')+': '+e.message)}}
 $('admList').addEventListener('change',e=>{const i=e.target.closest('input[data-id]');if(!i)return;const p=cfg.points.find(x=>x.id===i.dataset.id);p[i.dataset.a]=i.checked;saveCfg()});
 $('admList').addEventListener('click',async e=>{
- const mv=e.target.closest('[data-mv]');
- if(mv){const i=cfg.points.findIndex(x=>x.id===mv.dataset.id),j=i+Number(mv.dataset.mv);if(i<0||j<0||j>=cfg.points.length)return;[cfg.points[i],cfg.points[j]]=[cfg.points[j],cfg.points[i]];await saveCfg();renderAdmin();return}
  const d=e.target.closest('[data-del]');
  if(d){const p=cfg.points.find(x=>x.id===d.dataset.del);if(!p||!confirm(t('delConfirm')+' "'+p.name+'"?'))return;cfg.points=cfg.points.filter(x=>x.id!==p.id);await saveCfg();renderAdmin();return}
  if(e.target.id==='addStepBtn'){const name=$('newName').value.trim();if(!name)return toast(t('stepNameNeed'));
   const p={id:'c'+Date.now().toString(36),name,type:$('newType').value,photo:$('newPhoto').checked,active:true,custom:true},i=cfg.points.findIndex(x=>x.id==='ice');
   cfg.points.splice(i<0?cfg.points.length:i,0,p);await saveCfg();renderAdmin()}});
+(()=>{let row=null,pid=null;const list=$('admList');
+ list.addEventListener('pointerdown',e=>{const g=e.target.closest('[data-grab]');if(!g)return;e.preventDefault();pid=g.dataset.grab;row=list.querySelector(`[data-row="${pid}"]`);row.classList.add('dragging');try{g.setPointerCapture(e.pointerId)}catch(x){}});
+ list.addEventListener('pointermove',e=>{if(!row)return;e.preventDefault();
+  const rows=[...list.querySelectorAll('[data-row]')].filter(r=>r!==row);
+  for(const r of rows){const b=r.getBoundingClientRect(),mid=b.top+b.height/2;
+   const pos=row.compareDocumentPosition(r);
+   if(e.clientY<mid&&(pos&Node.DOCUMENT_POSITION_PRECEDING)){list.insertBefore(row,r);break}
+   if(e.clientY>mid&&(pos&Node.DOCUMENT_POSITION_FOLLOWING)){r.after(row);break}}
+  if(e.clientY<70)window.scrollBy(0,-14);else if(e.clientY>innerHeight-70)window.scrollBy(0,14)});
+ const end=async()=>{if(!row)return;row.classList.remove('dragging');const ids=[...list.querySelectorAll('[data-row]')].map(r=>r.dataset.row),before=cfg.points.map(p=>p.id).join();row=null;pid=null;
+  if(ids.join()===before)return;cfg.points=ids.map(id=>cfg.points.find(p=>p.id===id));await saveCfg()};
+ list.addEventListener('pointerup',end);list.addEventListener('pointercancel',end)})();
 $('iceTime').onchange=e=>{if(e.target.value){cfg.iceTime=e.target.value;saveCfg()}};
 $('history').addEventListener('click',e=>{const b=e.target.closest('[data-day]');if(b)view('day',b.dataset.day)});$('dayBack').onclick=()=>view('home');
 $('adminBtn').onclick=()=>view('admin');$('admClose').onclick=()=>view('home');
