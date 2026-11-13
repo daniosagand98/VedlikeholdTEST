@@ -51,11 +51,11 @@ details.hist{border-top:1px solid var(--line);padding:10px 0}details.hist summar
 <body><main class="app">
 <header class="top"><button class="iconbtn" id="homeBtn" aria-label="Lobby">🏠</button><div style="flex:1"><h1 id="title">Renseanlegg</h1><small id="subtitle"></small></div><button class="iconbtn hidden" id="adminBtn">⚙️</button></header>
 <div id="alerts"></div>
-<section id="home"><div class="card hero"><div style="font-size:48px">💧</div><h2 id="startTitle"></h2><p class="muted" id="startDesc"></p><button class="btn primary" id="startBtn"></button></div><div class="card hidden" id="histCard"><h3 id="histTitle" style="margin-top:0"></h3><div id="history"></div></div></section>
+<section id="home"><div class="card hero"><div style="font-size:48px">💧</div><h2 id="startTitle"></h2><p class="muted" id="startDesc"></p><button class="btn primary" id="startBtn"></button><button class="btn red hidden" id="homeDel" style="margin-top:10px"></button></div><div class="card hidden" id="histCard"><h3 id="histTitle" style="margin-top:0"></h3><div id="history"></div></div></section>
 <section id="day" class="hidden"><div class="card"><div class="row"><h2 style="margin:0" id="dayTitle"></h2><button class="btn" id="dayBack"></button></div><p class="muted" id="dayInfo"></p></div><div id="dayRows"></div><div class="card hidden" id="dayDelCard"><button class="btn red" id="dayDel" style="width:100%"></button></div></section>
 <section id="run" class="hidden"><div class="card"><div class="row"><b id="progressText"></b><span class="muted" id="runInfo"></span></div><div class="progress" style="margin-top:10px"><i id="bar"></i></div></div><div id="points"></div><div class="card"><button class="btn ok" id="finishBtn" style="width:100%"></button><button class="btn red" id="cancelBtn" style="width:100%;margin-top:10px"></button></div></section>
 <section id="admin" class="hidden"><div class="card"><div class="row"><h2 style="margin:0" id="admTitle"></h2><button class="btn" id="admClose"></button></div><p class="muted" id="admHelp"></p></div><div class="card" id="admList"></div><div class="card"><label id="iceLbl"></label><input id="iceTime" type="time"></div><div class="card"><label id="phLimLbl"></label><input id="phLimit" type="text" inputmode="decimal"><label id="phTimeLbl"></label><input id="phTime" type="time"></div></section>
-<footer class="appFooter">Renseanlegg v1.4.0<br>Created and designed by: <a href="https://dwsystem.eu" target="_blank" rel="noopener">DWSystem</a></footer>
+<footer class="appFooter">Renseanlegg v1.4.1<br>Created and designed by: <a href="https://dwsystem.eu" target="_blank" rel="noopener">DWSystem</a></footer>
 </main><div class="toast" id="toast"></div>
 <input id="fileIn" type="file" accept="image/*" capture="environment" class="hidden">
 <script>
@@ -131,11 +131,12 @@ function renderHome(){
  $('startTitle').textContent=t('startTitle');$('startDesc').textContent=t('startDesc');const r=todayRun();
  $('startBtn').textContent=r&&!r.finishedAt?t('resume'):t('start');$('startBtn').classList.toggle('hidden',!!r?.finishedAt);
  if(r?.finishedAt){$('startDesc').textContent='✅ '+t('finished')+' '+hm(r.finishedAt)}
+ $('homeDel').textContent=t('delRun');$('homeDel').classList.toggle('hidden',!(isAdmin&&r?.finishedAt));
  $('histTitle').textContent=t('hist');
  const list=[...runs].sort((a,b)=>b.date.localeCompare(a.date));
  $('histCard').classList.toggle('hidden',!isAdmin);
  $('history').innerHTML=list.length?list.map(r=>{const n=Object.values(r.items||{}).filter(i=>i.photo).length;
-  return `<button class="btn dayBtn" data-day="${esc(r.date)}"><span>${r.finishedAt?'✅':'⏳'} <b>${esc(dm(r.date))}</b> · ${esc(r.startedBy||'')}</span><span class="muted">${doneCount(r)}/${activePts().length}${n?` · 📷 ${n}`:''} ›</span></button>`}).join(''):`<p class="muted">${esc(t('noHist'))}</p>`}
+  return `<div style="display:flex;gap:8px;align-items:center;margin-bottom:8px"><button class="btn dayBtn" style="margin:0;flex:1" data-day="${esc(r.date)}"><span>${r.finishedAt?'✅':'⏳'} <b>${esc(dm(r.date))}</b> · ${esc(r.startedBy||'')}</span><span class="muted">${doneCount(r)}/${activePts().length}${n?` · 📷 ${n}`:''} ›</span></button><button class="iconbtn" data-delday="${esc(r.date)}" aria-label="${esc(t('delRun'))}">🗑️</button></div>`}).join(''):`<p class="muted">${esc(t('noHist'))}</p>`}
 function renderDay(date){
  const r=runs.find(x=>x.date===date);if(!r)return view('home');
  $('dayDel').textContent=t('delRun');$('dayDelCard').classList.toggle('hidden',!isAdmin);
@@ -229,7 +230,8 @@ $('admList').addEventListener('change',e=>{const i=e.target.closest('input[data-
 $('phLimit').onchange=e=>{const n=Number(String(e.target.value).replace(',','.'));if(!isFinite(n)||n<=0||n>14){e.target.value=String(cfg.phLimit).replace('.',',');return toast(t('needPh'))}cfg.phLimit=n;saveCfg()};
 $('phTime').onchange=e=>{if(e.target.value){cfg.phTime=e.target.value;saveCfg()}};
 $('iceTime').onchange=e=>{if(e.target.value){cfg.iceTime=e.target.value;saveCfg()}};
-$('history').addEventListener('click',e=>{const b=e.target.closest('[data-day]');if(b)view('day',b.dataset.day)});$('dayBack').onclick=()=>view('home');
+$('history').addEventListener('click',async e=>{const d=e.target.closest('[data-delday]');if(d){if(!confirm(t('delRunConfirm')))return;try{await dropRun(d.dataset.delday);toast(t('canceled'));renderHome();renderAlerts()}catch(x){toast(t('err')+': '+x.message)}return}const b=e.target.closest('[data-day]');if(b)view('day',b.dataset.day)});
+$('homeDel').onclick=async()=>{const r=todayRun();if(!r||!confirm(t('delRunConfirm')))return;try{await dropRun(r.date);toast(t('canceled'));renderHome();renderAlerts()}catch(x){toast(t('err')+': '+x.message)}};$('dayBack').onclick=()=>view('home');
 $('adminBtn').onclick=()=>view('admin');$('admClose').onclick=()=>view('home');
 $('homeBtn').onclick=()=>{try{if(parent!==window){parent.postMessage({type:'vf-open-lobby'},'*');return}}catch(e){}location.href=new URL('../',location.href).href};
 function applyLang(code){lang=UI[code]?code:(code==='nb'?'no':'pl');try{localStorage.setItem('vf-language',lang)}catch(e){}document.documentElement.lang=lang==='no'?'nb':lang;$('subtitle').textContent=t('sub');const v=!$('run').classList.contains('hidden')?'run':!$('admin').classList.contains('hidden')?'admin':!$('day').classList.contains('hidden')?'day':'home';if(me&&ready)view(v)}
